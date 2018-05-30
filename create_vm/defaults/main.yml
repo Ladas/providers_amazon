@@ -1,2 +1,2 @@
 ---
-# defaults file for create_vm
+security_group_id: {{ security_group_id.default(created_security_group.group_id) }}
