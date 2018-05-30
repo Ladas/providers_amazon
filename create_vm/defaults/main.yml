@@ -1,6 +1,7 @@
 ---
 created_security_group: ''
+vpc_subnet_id: ''
 security_group_id: "{{ security_group_id.default(created_security_group.group_id) }}"
 subnet_id: "{{ subnet_id.default('') }}"
 assign_public_ip: "{{ assign_public_ip.default('no') }}"
-instance_tags: "{{ instance_tags.default({}) }}"
+instance_tags: "{{ instance_tags.default('') | from_yaml }}"
