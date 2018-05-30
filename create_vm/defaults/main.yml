@@ -1,8 +1,6 @@
 ---
-created_security_group:
-  group_id: ''
 vpc_subnet_id: ''
-security_group_id: created_security_group.group_id
+security_group_id: ''
 subnet_id: ''
 assign_public_ip: no
 instance_tags: {}
