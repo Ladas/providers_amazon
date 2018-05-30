@@ -15,7 +15,7 @@
     count: "{{ count }}"
     vpc_subnet_id: "{{ vpc_subnet_id }}"
     assign_public_ip: "{{ assign_public_ip }}"
-    instance_tags: "{{ instance_tags }}"
+    instance_tags: "{{ instance_tags | from_yaml }}"
   register: created_instances
 - set_stats:
     data:
