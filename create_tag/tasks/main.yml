@@ -1,0 +1,41 @@
+---
+- name: Add tags to Instance(s)
+  local_action:
+    module: ec2_tag
+    resource: "{{ item.id }}"
+    region: "{{ region }}"
+    state: present
+  with_items: created_instances.instances
+  args:
+    tags: "{{ instance_tags | from_yaml }}"
+- name: Add name with instance index suffix
+  local_action:
+    module: ec2_tag
+    resource: "{{ item.id }}"
+    region: "{{ region }}"
+    state: present
+    tags:
+      Name: "{{ instance_name }}__{{ index }}"
+  loop: created_instances.instances
+  loop_control:
+    index_var: index
+  when: instance_name is defined
+- name: Add name with instance index suffix
+  debug:
+    msg: 'have to have action?'
+  tasks:
+    - set_fact:
+        indexed_tags: "{{ indexed_tags | default({}) | combine( { item.key: item.value } ) }}"
+      with_dict: "{{ instance_indexed_tags | from_yaml}}"
+    - local_action:
+        module: ec2_tag
+        resource: "{{ item.id }}"
+        region: "{{ region }}"
+        state: present
+        tags: "{{ indexed_tags }}"
+      loop: created_instances.instances
+      loop_control:
+        loop_var: outer_item
+        index_var: outer_index
+
+

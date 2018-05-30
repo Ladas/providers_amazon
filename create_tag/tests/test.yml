@@ -1,0 +1,7 @@
+---
+- name: Add tags to Instance(s)
+  hosts: localhost
+  connection: local
+  gather_facts: False
+  roles:
+    - create_tag
