@@ -4,15 +4,16 @@
 - debug:
     msg: "Hostvars {{ hostvars }}"
 - name: Provision EC2 Instance
-  local_action: ec2
-                group={{ created_security_group }}
-                instance_type={{ instance_type}}
-                image={{ image }}
-                wait=true
-                region={{ region }}
-                keypair={{ keypair }}
-                count={{ count | default(1) }}
-  register: created_instances_var
+  local_action:
+    module: ec2
+    group: {{ security_group_id }}
+    instance_type: {{ instance_type}}
+    image_uuid: {{ image }}
+    wait: true
+    region: {{ region }}
+    key_pair: {{ key_pair }}
+    count: {{ count }}
+  register: created_instances
 - set_stats:
     data:
-      created_instances: "{{ created_instances_var }}"
+      created_instances: "{{ created_instances }}"
