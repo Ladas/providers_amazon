@@ -8,7 +8,7 @@
     module: ec2
     group: {{ security_group_id }}
     instance_type: {{ instance_type}}
-    image_uuid: {{ image }}
+    image_uuid: {{ image_uuid }}
     wait: true
     region: {{ region }}
     key_pair: {{ key_pair }}
