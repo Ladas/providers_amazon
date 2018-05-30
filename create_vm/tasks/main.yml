@@ -5,7 +5,7 @@
     msg: "Security group id {{ security_group_id }}"
 - name: "'security_group_id' is empty, trying 'created_security_group.group_id'"
   set_facts:
-    security_group_id: {{ created_security_group.group_id }}
+    security_group_id: "{{ created_security_group.group_id }}"
   when: security_group_id is not defined or security_group_id == ''
 - debug:
     msg: "Security group id {{ security_group_id }}"
