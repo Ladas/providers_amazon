@@ -6,16 +6,16 @@
 - name: Provision EC2 Instance
   local_action:
     module: ec2
-    group: {{ security_group_id }}
-    instance_type: {{ instance_type}}
-    image_uuid: {{ image_uuid }}
+    group: "{{ security_group_id }}"
+    instance_type: "{{ instance_type}}"
+    image_uuid: "{{ image_uuid }}"
     wait: true
-    region: {{ region }}
-    key_pair: {{ key_pair }}
-    count: {{ count }}
-    vpc_subnet_id: {{ vpc_subnet_id }}
-    assign_public_ip: {{ assign_public_ip }}
-    instance_tags: {{ instance_tags }}
+    region: "{{ region }}"
+    key_pair: "{{ key_pair }}"
+    count: "{{ count }}"
+    vpc_subnet_id: "{{ vpc_subnet_id }}"
+    assign_public_ip: "{{ assign_public_ip }}"
+    instance_tags: "{{ instance_tags }}"
   register: created_instances
 - set_stats:
     data:
