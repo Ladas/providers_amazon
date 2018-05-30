@@ -13,6 +13,8 @@
     region: {{ region }}
     key_pair: {{ key_pair }}
     count: {{ count }}
+    vpc_subnet_id: {{ vpc_subnet_id }}
+    assign_public_ip: {{ assign_public_ip }}
   register: created_instances
 - set_stats:
     data:
