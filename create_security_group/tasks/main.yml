@@ -7,22 +7,8 @@
       description: "{{ security_group_description }}"
       region: "{{ region }}"
       vpc_id: "{{ vpc_id }}"
-      rules: # todo this can go from input
-        - proto: tcp
-          from_port: 22
-          to_port: 22
-          cidr_ip: 0.0.0.0/0
-        - proto: tcp
-          from_port: 80
-          to_port: 80
-          cidr_ip: 0.0.0.0/0
-        - proto: tcp
-          from_port: 443
-          to_port: 443
-          cidr_ip: 0.0.0.0/0
-      rules_egress:
-        - proto: all
-          cidr_ip: 0.0.0.0/0
+      rules: {{ security_group_rules }}
+      rules_egress: {{ security_group_rules_egress }}
     register: created_security_group
   - set_stats:
       data:
