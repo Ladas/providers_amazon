@@ -1,8 +1,8 @@
 ---
 - debug:
-    msg: "Created security group {{ created_security_group }}"
+    msg: "Created security group {{ created_security_group | to_nice_yaml }}"
 - debug:
-    msg: "Hostvars {{ hostvars }}"
+    msg: "Hostvars {{ hostvars | to_nice_yaml }}"
 - name: Provision EC2 Instance
   local_action:
     module: ec2
