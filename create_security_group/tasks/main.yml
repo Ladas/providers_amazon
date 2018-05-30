@@ -1,0 +1,28 @@
+---
+- name: Create a security group
+  local_action:
+    module: ec2_group
+    name: "{{ security_group_name | default('ladas_ansible_test_1_sc_name') }}"
+    description: "{{ security_group_description | default('ladas_ansible_test_1_sc_description') }}"
+    region: "{{ region }}"
+    vpc_id: vpc-ff49ff91
+    rules: # todo this ca go from input
+      - proto: tcp
+        from_port: 22
+        to_port: 22
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 80
+        to_port: 80
+        cidr_ip: 0.0.0.0/0
+      - proto: tcp
+        from_port: 443
+        to_port: 443
+        cidr_ip: 0.0.0.0/0
+    rules_egress:
+      - proto: all
+        cidr_ip: 0.0.0.0/0
+  register: created_security_group_var
+- set_stats:
+    data:
+      created_security_group: "{{ created_security_group_var }}"
