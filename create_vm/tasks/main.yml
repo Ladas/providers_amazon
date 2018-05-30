@@ -2,7 +2,7 @@
 - debug:
     msg: "Created security group {{ created_security_group }}"
 - debug:
-    msg: "Created security group var{{ created_security_group_var }}"
+    msg: "Hostvars {{ hostvars }}"
 - name: Provision EC2 Instance
   local_action: ec2
                 group={{ created_security_group }}
@@ -15,4 +15,4 @@
   register: created_instances_var
 - set_stats:
     data:
-        created_instances: "{{ created_instances_var }}"
+      created_instances: "{{ created_instances_var }}"
