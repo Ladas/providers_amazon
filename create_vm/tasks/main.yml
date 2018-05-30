@@ -13,7 +13,7 @@
     group: "{{ group }}"
     instance_type: "{{ instance_type}}"
     image: "{{ image_uuid }}"
-    wait: true
+    wait: false
     region: "{{ region }}"
     key_name: "{{ key_pair }}"
     count: "{{ count }}"
