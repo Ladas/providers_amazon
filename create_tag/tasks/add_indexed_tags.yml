@@ -1,9 +1,11 @@
 - set_fact:
     indexed_tags: "{{ indexed_tags | default({}) | combine( { item.key: item.value | string + '__' + outer_index | string } ) }}"
   with_dict: "{{ instance_indexed_tags | from_yaml}}"
+- debug:
+    msg: "indexed_tags:  {{ indexed_tags s}}"
 - local_action:
     module: ec2_tag
-    resource: "{{ item.id }}"
+    resource: "{{ outer_item.id }}"
     region: "{{ region }}"
     state: present
     tags: "{{ indexed_tags }}"
