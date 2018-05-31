@@ -20,16 +20,7 @@
     tags: "{{ instance_tags | from_yaml }}"
   with_items: "{{ created_instances.instances }}"
 - name: Add tags to Instance(s) with index suffix
-  block:
-    - set_fact:
-        indexed_tags: "{{ indexed_tags | default({}) | combine( { item.key: item.value + '__' + outer_index }} } ) }}"
-      with_dict: "{{ instance_indexed_tags | from_yaml}}"
-    - local_action:
-        module: ec2_tag
-        resource: "{{ item.id }}"
-        region: "{{ region }}"
-        state: present
-        tags: "{{ indexed_tags }}"
+  include: add_indexed_tags.yml
   loop: "{{ created_instances.instances }}"
   loop_control:
     loop_var: outer_item
