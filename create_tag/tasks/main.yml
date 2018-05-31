@@ -2,7 +2,7 @@
 - name: debug
   debug:
     msg: "item is: {{ item }}"
-  with_items: created_instances.instances
+  with_items: "{{ created_instances.instances }}"
 - name: Add tags to Instance(s)
   local_action:
     module: ec2_tag
@@ -10,7 +10,7 @@
     region: "{{ region }}"
     state: present
     tags: "{{ instance_tags | from_yaml }}"
-  with_items: created_instances.instances
+  with_items: "{{ created_instances.instances }}"
 - name: Add name with instance index suffix
   local_action:
     module: ec2_tag
@@ -19,7 +19,7 @@
     state: present
     tags:
       Name: "{{ instance_name }}__{{ index }}"
-  loop: created_instances.instances
+  loop: "{{ created_instances.instances }}"
   loop_control:
     index_var: index
   when: instance_name is defined
@@ -36,7 +36,7 @@
         region: "{{ region }}"
         state: present
         tags: "{{ indexed_tags }}"
-      loop: created_instances.instances
+      loop: "{{ created_instances.instances }}"
       loop_control:
         loop_var: outer_item
         index_var: outer_index
