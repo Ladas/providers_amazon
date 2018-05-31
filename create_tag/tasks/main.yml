@@ -1,13 +1,16 @@
 ---
+- name: debug
+  debug:
+    msg: "item is: {{ item }}"
+  with_items: created_instances.instances
 - name: Add tags to Instance(s)
   local_action:
     module: ec2_tag
     resource: "{{ item.id }}"
     region: "{{ region }}"
     state: present
-  with_items: created_instances.instances
-  args:
     tags: "{{ instance_tags | from_yaml }}"
+  with_items: created_instances.instances
 - name: Add name with instance index suffix
   local_action:
     module: ec2_tag
