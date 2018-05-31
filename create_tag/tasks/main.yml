@@ -1,17 +1,5 @@
 ---
-- name: debug
-  debug:
-    msg: "item is: {{ item }}"
-  with_items: "{{ created_instances.instances }}"
-- name: Add tags to Instance(s)
-  local_action:
-    module: ec2_tag
-    resource: "{{ item.id }}"
-    region: "{{ region }}"
-    state: present
-    tags: "{{ instance_tags | from_yaml }}"
-  with_items: "{{ created_instances.instances }}"
-- name: Add name with instance index suffix
+- name: Add Instance(s) names with index suffix, if there is more than 1 Instance
   local_action:
     module: ec2_tag
     resource: "{{ item.id }}"
@@ -22,13 +10,19 @@
   loop: "{{ created_instances.instances }}"
   loop_control:
     index_var: index
-  when: instance_name is defined
-- name: Add name with instance index suffix
-  debug:
-    msg: 'have to have action?'
-  tasks:
+  when: instance_name is defined and instance_name != '' and created_instances.instances | length > 1
+- name: Add tags to Instance(s)
+  local_action:
+    module: ec2_tag
+    resource: "{{ item.id }}"
+    region: "{{ region }}"
+    state: present
+    tags: "{{ instance_tags | from_yaml }}"
+  with_items: "{{ created_instances.instances }}"
+- name: Add tags to Instance(s) with index suffix
+  block:
     - set_fact:
-        indexed_tags: "{{ indexed_tags | default({}) | combine( { item.key: item.value } ) }}"
+        indexed_tags: "{{ indexed_tags | default({}) | combine( { item.key: '{{item.value}}__{{ outer_index }} } ) }}"
       with_dict: "{{ instance_indexed_tags | from_yaml}}"
     - local_action:
         module: ec2_tag
