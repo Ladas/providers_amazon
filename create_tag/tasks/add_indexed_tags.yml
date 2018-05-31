@@ -2,7 +2,7 @@
     indexed_tags: "{{ indexed_tags | default({}) | combine( { item.key: item.value | string + '__' + outer_index | string } ) }}"
   with_dict: "{{ instance_indexed_tags | from_yaml}}"
 - debug:
-    msg: "indexed_tags:  {{ indexed_tags s}}"
+    msg: "indexed_tags:  {{ indexed_tags }}"
 - local_action:
     module: ec2_tag
     resource: "{{ outer_item.id }}"
