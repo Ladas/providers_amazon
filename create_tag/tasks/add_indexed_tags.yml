@@ -1,5 +1,5 @@
 - set_fact:
-    indexed_tags: "{{ indexed_tags | default({}) | combine( { item.key: item.value + '__' + outer_index }} } ) }}"
+    indexed_tags: "{{ indexed_tags | default({}) | combine( { item.key: item.value + '__' + outer_index } ) }}"
   with_dict: "{{ instance_indexed_tags | from_yaml}}"
 - local_action:
     module: ec2_tag
