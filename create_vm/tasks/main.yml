@@ -1,16 +1,16 @@
 ---
 - name: "'security_group_id' passed using: {{ security_group_id }}"
   set_fact:
-    group: "{{ security_group_id }}"
+    group_id: "{{ security_group_id }}"
   when: security_group_id is defined and security_group_id != ''
 - name: "'security_group_id' is empty, using 'created_security_group.group_id'"
   set_fact:
-    group: "{{ created_security_group.group_id }}"
+    group_id: "{{ created_security_group.group_id }}"
   when: security_group_id is not defined or security_group_id == ''
 - name: Provision EC2 Instance
   local_action:
     module: ec2
-    group: "{{ group }}"
+    group_id: "{{ group_id }}"
     instance_type: "{{ instance_type}}"
     image: "{{ image_uuid }}"
     wait: false
